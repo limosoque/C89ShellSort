@@ -164,7 +164,7 @@ void InsertionSort(
     for (i = step; i < arr_size; i++) {
 		memcpy(temp, (char_t*)arr + (i * type_size), type_size);
         
-        for (j = i; j >= step && (int16_t)compare((char_t*)arr + (j - step) * type_size, temp) > 0; j -= step) {
+        for (j = i; j >= step && (int16_t)compare((char_t*)arr + (j - step) * type_size, temp) == 1; j -= step) {
 			memcpy((char_t*)arr + j * type_size, (char_t*)arr + (j - step) * type_size, type_size);
         }
         
@@ -194,40 +194,35 @@ int16_t ECOCALLMETHOD CEcoLab1_qsort(
 	) {
 	 CEcoLab1* pCMe = (CEcoLab1*)me;
 	
-	int16_t i, j, step, steps_index;
+	int16_t i, j, steps_index;
+	int32_t step;
 
 	/* Создание массива для разбиения Сэджвика, 
 	20 хватит для размера массива в несколько миллионов элементов */
-	uint32_t steps[20];
-	for(i = 0; i < 20; i++)
-		steps[i] = -1;
+	//uint32_t steps[20];
+	//for(i = 0; i < 20; i++)
+	//	steps[i] = -1;
 
-	steps_index = CalculateSedgewickSteps(steps, arr_size);
+	//steps_index = CalculateSedgewickSteps(steps, arr_size);
 
-	printf("Steps array:\n");
-    for (i = 0; i <= steps_index; i++)
-        printf("%d ", steps[i]);
-    printf("\n");
-	printf("Steps array:\n");
-    for (i = 0; i < 20; i++)
-        printf("%d ", steps[i]);
-    printf("\n");
+	//printf("Steps array:\n");
+ //   for (i = 0; i <= steps_index; i++)
+ //       printf("%d ", steps[i]);
+ //   printf("\n");
+	//printf("Steps array:\n");
+ //   for (i = 0; i < 20; i++)
+ //       printf("%d ", steps[i]);
+ //   printf("\n");
 
 	/* Сортировка разбиением Сэджвика */
-	for (i = steps_index; i >= 0; i--) {
-		InsertionSort(pCMe, arr, arr_size, type_size, steps[i], compare);
-	}
+	//for (i = steps_index; i >= 0; i--) {
+	//	InsertionSort(pCMe, arr, arr_size, type_size, steps[i], compare);
+	//}
 
 	/* Сортировка разбиением Шелла */
     for (step = arr_size / 2; step > 0; step /= 2) {
 		InsertionSort(pCMe, arr, arr_size, type_size, step, compare);
 	}
-
-	/* Вывод отсортированного массива */
-	//printf("Sorted array:\n");
-	//for (i = 0; i < arr_size; i++)
-	//	printf("%d ", arr[i]);
-	//printf("\n");
 
     return 0;
 }

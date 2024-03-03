@@ -28,21 +28,74 @@
 #include "time.h"
 
 
+//int16_t __cdecl compare_int16(const void* a, const void* b) {
+//	return (*(int16_t*)a > *(int16_t*)b);
+//}
+//
+//int16_t __cdecl compare_int32(const void* a, const void* b) {
+//	return (*(int32_t*)a > *(int32_t*)b);
+//}
+//
+//int16_t __cdecl compare_double(const void* a, const void* b) {
+//	return (*(double_t*)a > *(double_t*)b);
+//}
+//
+//int16_t __cdecl compare_float(const void* a, const void* b) {
+//	return (*(float_t*)a > *(float_t*)b);
+//}
+
 int16_t __cdecl compare_int16(const void* a, const void* b) {
-	return (*(int16_t*)a > *(int16_t*)b);
+	int16_t arg1 = *(const int16_t*)a;
+    int16_t arg2 = *(const int16_t*)b;
+ 
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+    return 0;
 }
 
 int16_t __cdecl compare_int32(const void* a, const void* b) {
-	return (*(int32_t*)a > *(int32_t*)b);
+	int32_t arg1 = *(const int32_t*)a;
+    int32_t arg2 = *(const int32_t*)b;
+ 
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+    return 0;
 }
 
 int16_t __cdecl compare_double(const void* a, const void* b) {
-	return (*(double_t*)a > *(double_t*)b);
+	double_t arg1 = *(const double_t*)a;
+    double_t arg2 = *(const double_t*)b;
+ 
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+    return 0;
 }
 
 int16_t __cdecl compare_float(const void* a, const void* b) {
-	return (*(float_t*)a > *(float_t*)b);
+	float_t arg1 = *(const float_t*)a;
+    float_t arg2 = *(const float_t*)b;
+ 
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+    return 0;
 }
+
+int16_t __cdecl compare_char(const void* a, const void* b) {
+	char_t arg1 = *(const char_t*)a;
+    char_t arg2 = *(const char_t*)b;
+ 
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+    return 0;
+}
+
+int16_t __cdecl compare_string(const void* a, const void* b) {
+	int32_t result = strcmp(*(const char**)a, *(const char**)b);
+    if (result < 0) return -1;
+    if (result > 0) return 1;
+    return 0;
+}
+
 
 /*
  *
@@ -78,6 +131,10 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	double_t* arr_double;
 	float_t* arr_float;
 
+	/* Переменные для замера времени работы */
+	clock_t start, end;
+	double_t sorting_time = 0;
+	int16_t j;
 
     /* Проверка и создание системного интрефейса */
     if (pISys == 0) {
@@ -124,7 +181,7 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
         goto Release;
     }
 
-	
+
 	/* Проверка сортировки */
 	srand((unsigned int)time(NULL));
 
@@ -133,9 +190,10 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	
 	/* Выделение памяти для массивов */
 	//arr16 = (int16_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(int16_t));
-	//arr32 = (int32_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(int32_t));
+	arr32 = (int32_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(int32_t));
 	//arr_double = (double_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(double_t));
-	arr_float = (float_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(float_t));
+	//arr_float = (float_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(float_t));
+	//arr_double = (double_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(double_t));
     
 	/* Ввод элементов массива */
     //printf("Input the array elements: \n");
@@ -145,45 +203,58 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	//	scanf_s("%f", &arr_double[i]);
 	//	scanf_s("%f", &arr_float[i]);
 	//}
+	
+	//Выполнение нескольких сортировок для получения среднего времени выполнения
+	for(j = 0; j < 10; j++) {
+		/* Заполнение массива рандомными числами */
+		for(i = 0; i < size; i++) {
+			//arr16[i] = rand() % 10;
+			arr32[i] = size - i;
+			//arr32[i] = rand() % 1000 * (i % 2 == 0 ? 1 : -1);
+			//arr_double[i] = rand() % 100 * 0.0001 * (rand() % 100) * (i % 2 == 0 ? 1 : -1);
+			//arr_float[i] = rand() % 100 + 0.1 * (rand() % 100) * (i % 2 == 0 ? 1 : -1);
+		}
 
-	for(i = 0; i < size; i++) {
-		//arr16[i] = rand() % 100;
-		//arr32[i] = rand() % 1000 * (i % 2 == 0 ? 1 : -1);
-		//arr_double[i] = rand() % 100 * 0.0001 * (rand() % 100) * (i % 2 == 0 ? 1 : -1);
-		arr_float[i] = rand() % 100 + 0.1 * (rand() % 100) * (i % 2 == 0 ? 1 : -1);
+		/* Печать неотсортированного массива */
+		//printf("Unsorted array:\n");
+		//for (i = 0; i < size; i++) {
+		//	//printf("%d ", arr16[i]);
+		//	printf("%d ", arr32[i]);
+		//	//printf("%f ", arr_double[i]);
+		//	//printf("%f ", arr_float[i]);
+		//}
+		//printf("\n");
+
+		start = clock();
+
+		/* Сортировка */
+		//result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(int16_t), arr16, compare_int16);
+		result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(int32_t), arr32, compare_int32);
+		//result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(double_t), arr_double, compare_double);
+		//result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(float_t), arr_float, compare_float);
+		//qsort(arr32, size, sizeof(int32_t), compare_int32);
+	
+		end = clock();
+		sorting_time += (double_t)(end - start) * 1000.0 / CLOCKS_PER_SEC;
 	}
-
-	/* Печать неотсортированного массива */
-	//printf("Unsorted array:\n");
-	//for (i = 0; i < size; i++) {
-	//	printf("%d ", arr16[i]);
-	//	printf("%d ", arr32[i]);
-	//	printf("%f ", arr_double[i]);
-	//	printf("%f ", arr_float[i]);
-	//}
-	//printf("\n");
-
-	/* Сортировка */
-    //result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(int16_t), arr16, compare_int16);
-	//result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(int32_t), arr32, compare_int32);
-	//result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(double_t), arr_double, compare_double);
-	result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(float_t), arr_float, compare_float);
+	sorting_time /= 10;
+	printf("Sorting time: %f milli-seconds\n", sorting_time);
 
 	/* Печать отсортированного массива */
-	printf("Sorted array:\n");
-	for (i = 0; i < size; i++) {
-		printf("%d ", arr16[i]);
-		printf("%d ", arr32[i]);
-		printf("%f ", arr_double[i]);
-		printf("%f ", arr_float[i]);
-	}
-    printf("\n");
+	//printf("Sorted array:\n");
+	//for (i = 0; i < size; i++) {
+	//	//printf("%d ", arr16[i]);
+	//	printf("%d ", arr32[i]);
+	//	//printf("%f ", arr_double[i]);
+	//	//printf("%f ", arr_float[i]);
+	//}
+ //   printf("\n");
 
     /* Освлбождение блока памяти */
-	pIMem->pVTbl->Free(pIMem, arr16);
+	//pIMem->pVTbl->Free(pIMem, arr16);
 	pIMem->pVTbl->Free(pIMem, arr32);
-	pIMem->pVTbl->Free(pIMem, arr_double);
-	pIMem->pVTbl->Free(pIMem, arr_float);
+	//pIMem->pVTbl->Free(pIMem, arr_double);
+	//pIMem->pVTbl->Free(pIMem, arr_float);
     pIMem->pVTbl->Free(pIMem, name);
 
 Release:
