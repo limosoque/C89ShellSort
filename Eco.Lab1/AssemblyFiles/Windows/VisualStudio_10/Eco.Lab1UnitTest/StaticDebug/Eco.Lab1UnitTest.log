@@ -1,17 +1,19 @@
-﻿Build started 03.03.2024 13:36:36.
+﻿Build started 03.03.2024 16:34:34.
      1>Project "C:\Users\antip\Documents\Visual Studio 2010\Projects\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.Lab1UnitTest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Eco.Lab1UnitTest\StaticDebug\Eco.Lab1UnitTest.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\..\SharedFiles /I..\..\..\HeaderFiles /IC:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.Core1\SharedFiles /IC:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.InterfaceBus1\SharedFiles /IC:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.System1\SharedFiles /IC:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.MemoryManager1\SharedFiles /IC:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.FileSystemManagement1\SharedFiles /IC:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.List1\SharedFiles /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D UGUID_UTILITY /D ECO_WINDOWS /D ECO_WIN32 /D ECO_LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Eco.Lab1UnitTest\StaticDebug\\" /Fd"Eco.Lab1UnitTest\StaticDebug\vc100.pdb" /Gz /TC /analyze- /errorReport:prompt ..\..\..\UnitTestFiles\SourceFiles\EcoLab1.c
          EcoLab1.c
-     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(216): warning C4047: 'function' : 'void **' differs in levels of indirection from 'int32_t *'
-     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(216): warning C4022: 'function through pointer' : pointer mismatch for actual parameter 4
-     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(216): warning C4047: 'function' : 'void *(__cdecl *)(const void *,const void *)' differs in levels of indirection from 'int16_t (__cdecl *)(const void *,const void *)'
-     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(216): warning C4022: 'function through pointer' : pointer mismatch for actual parameter 5
-     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(115): warning C4101: 'arr_double' : unreferenced local variable
-     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(113): warning C4101: 'arr16' : unreferenced local variable
-     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(116): warning C4101: 'arr_float' : unreferenced local variable
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(247): warning C4047: 'function' : 'void **' differs in levels of indirection from 'int32_t *'
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(247): warning C4022: 'function through pointer' : pointer mismatch for actual parameter 4
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(247): warning C4047: 'function' : 'void *(__cdecl *)(const void *,const void *)' differs in levels of indirection from 'int16_t (__cdecl *)(const void *,const void *)'
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(247): warning C4022: 'function through pointer' : pointer mismatch for actual parameter 5
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(131): warning C4101: 'arr_double' : unreferenced local variable
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(129): warning C4101: 'arr16' : unreferenced local variable
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(132): warning C4101: 'arr_float' : unreferenced local variable
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(133): warning C4101: 'string_arr' : unreferenced local variable
+     1>c:\users\antip\documents\visual studio 2010\projects\eco.lab1\unittestfiles\sourcefiles\ecolab1.c(138): warning C4101: 'j' : unreferenced local variable
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\antip\Documents\Visual Studio 2010\Projects\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.Lab1UnitTest\StaticDebug\Eco.Lab1UnitTest.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\..\BuildFiles\Windows\x86\StaticDebug\ /LIBPATH:C:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.InterfaceBus1\BuildFiles\Windows\x86\StaticRelease\ /LIBPATH:C:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.System1\BuildFiles\Windows\x86\StaticRelease\ /LIBPATH:C:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.MemoryManager1\BuildFiles\Windows\x86\StaticRelease\ /LIBPATH:C:\Users\antip\Downloads\Eco.Framework_20230409\Eco.Framework\Eco.FileSystemManagement1\BuildFiles\Windows\x86\StaticRelease\ 1F5DF16EE1BF43B999A434ED38FE8F3A.lib 00000000000000000000000042757331.lib 0000000000000000000000004D656D31.lib 00000000000000000000000000000100.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Eco.Lab1UnitTest\StaticDebug\Eco.Lab1UnitTest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\antip\Documents\Visual Studio 2010\Projects\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.Lab1UnitTest\StaticDebug\Eco.Lab1UnitTest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\antip\Documents\Visual Studio 2010\Projects\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.Lab1UnitTest\StaticDebug\Eco.Lab1UnitTest.lib" /MACHINE:X86 Eco.Lab1UnitTest\StaticDebug\EcoLab1.obj
      1>EcoLab1.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
@@ -43,4 +45,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.59
+Time Elapsed 00:00:02.90

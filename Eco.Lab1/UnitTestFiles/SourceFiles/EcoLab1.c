@@ -26,7 +26,7 @@
 #include "IdEcoLab1.h"
 
 #include "time.h"
-
+#include "string.h"
 
 //int16_t __cdecl compare_int16(const void* a, const void* b) {
 //	return (*(int16_t*)a > *(int16_t*)b);
@@ -130,6 +130,7 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	int32_t* arr32;
 	double_t* arr_double;
 	float_t* arr_float;
+	char_t** string_arr;
 
 	/* Переменные для замера времени работы */
 	clock_t start, end;
@@ -183,6 +184,7 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 
 
 	/* Проверка сортировки */
+
 	srand((unsigned int)time(NULL));
 
 	printf("Input an array size: \n");
@@ -194,23 +196,36 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	//arr_double = (double_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(double_t));
 	//arr_float = (float_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(float_t));
 	//arr_double = (double_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(double_t));
+	
+	//string_arr = (char_t **) pIMem->pVTbl->Alloc(pIMem, size * sizeof(char_t*));
+	//for(j = 0; j < size; j++) {
+	//	string_arr[j] = (char_t*) pIMem->pVTbl->Alloc(pIMem, 15 * sizeof(char_t));
+	//}
+
+	//for(j = 0; j < size; j++) {
+	//	scanf_s("%s", &string_arr[j]);
+	//}
+
+	//for(j = 0; j < size; j++) {
+	//	printf("%s", string_arr[j]);
+	//}
     
 	/* Ввод элементов массива */
-    //printf("Input the array elements: \n");
+ //   printf("Input the array elements: \n");
 	//for (i = 0; i < size; i++) {
-	//	scanf_s("%d", &arr16[i]);
-	//  scanf_s("%d", &arr32[i]);
-	//	scanf_s("%f", &arr_double[i]);
-	//	scanf_s("%f", &arr_float[i]);
+	//	//scanf_s("%d", &arr16[i]);
+	//    scanf_s("%d", &arr32[i]);
+	//	//scanf_s("%f", &arr_double[i]);
+	//	//scanf_s("%f", &arr_float[i]);
 	//}
 	
 	//Выполнение нескольких сортировок для получения среднего времени выполнения
-	for(j = 0; j < 10; j++) {
+	//for(j = 0; j < 10; j++) {
 		/* Заполнение массива рандомными числами */
 		for(i = 0; i < size; i++) {
 			//arr16[i] = rand() % 10;
-			arr32[i] = size - i;
-			//arr32[i] = rand() % 1000 * (i % 2 == 0 ? 1 : -1);
+			//arr32[i] = size - i;
+			arr32[i] = rand() % 1000 * (i % 2 == 0 ? 1 : -1);
 			//arr_double[i] = rand() % 100 * 0.0001 * (rand() % 100) * (i % 2 == 0 ? 1 : -1);
 			//arr_float[i] = rand() % 100 + 0.1 * (rand() % 100) * (i % 2 == 0 ? 1 : -1);
 		}
@@ -236,19 +251,19 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	
 		end = clock();
 		sorting_time += (double_t)(end - start) * 1000.0 / CLOCKS_PER_SEC;
-	}
-	sorting_time /= 10;
+	//}
+	//sorting_time /= 10;
 	printf("Sorting time: %f milli-seconds\n", sorting_time);
 
 	/* Печать отсортированного массива */
-	//printf("Sorted array:\n");
-	//for (i = 0; i < size; i++) {
-	//	//printf("%d ", arr16[i]);
-	//	printf("%d ", arr32[i]);
-	//	//printf("%f ", arr_double[i]);
-	//	//printf("%f ", arr_float[i]);
-	//}
- //   printf("\n");
+	printf("Sorted array:\n");
+	for (i = 0; i < size; i++) {
+		//printf("%d ", arr16[i]);
+		printf("%d ", arr32[i]);
+		//printf("%f ", arr_double[i]);
+		//printf("%f ", arr_float[i]);
+	}
+    printf("\n");
 
     /* Освлбождение блока памяти */
 	//pIMem->pVTbl->Free(pIMem, arr16);

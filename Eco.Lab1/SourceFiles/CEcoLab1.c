@@ -199,74 +199,29 @@ int16_t ECOCALLMETHOD CEcoLab1_qsort(
 
 	/* Создание массива для разбиения Сэджвика, 
 	20 хватит для размера массива в несколько миллионов элементов */
-	//uint32_t steps[20];
-	//for(i = 0; i < 20; i++)
-	//	steps[i] = -1;
+	uint32_t steps[20];
+	for(i = 0; i < 20; i++)
+		steps[i] = -1;
 
-	//steps_index = CalculateSedgewickSteps(steps, arr_size);
+	steps_index = CalculateSedgewickSteps(steps, arr_size);
 
 	//printf("Steps array:\n");
- //   for (i = 0; i <= steps_index; i++)
- //       printf("%d ", steps[i]);
- //   printf("\n");
-	//printf("Steps array:\n");
- //   for (i = 0; i < 20; i++)
- //       printf("%d ", steps[i]);
- //   printf("\n");
+	//for (i = 0; i <= steps_index; i++)
+	//    printf("%d ", steps[i]);
+	//printf("\n");
 
 	/* Сортировка разбиением Сэджвика */
-	//for (i = steps_index; i >= 0; i--) {
-	//	InsertionSort(pCMe, arr, arr_size, type_size, steps[i], compare);
-	//}
+	for (i = steps_index; i >= 0; i--) {
+		InsertionSort(pCMe, arr, arr_size, type_size, steps[i], compare);
+	}
 
 	/* Сортировка разбиением Шелла */
-    for (step = arr_size / 2; step > 0; step /= 2) {
-		InsertionSort(pCMe, arr, arr_size, type_size, step, compare);
-	}
+	//for (step = arr_size / 2; step > 0; step /= 2) {
+	//	InsertionSort(pCMe, arr, arr_size, type_size, step, compare);
+	//}
 
     return 0;
 }
-
-//int16_t ECOCALLMETHOD CEcoLab1_qsort(/* in */ struct IEcoLab1* me, /* in */ uint32_t size, /* in */ int32_t arr[]) {
-//    CEcoLab1* pCMe = (CEcoLab1*)me;
-//	
-//	int16_t i, j, step, steps_index;
-//	//int16_t* steps = (int16_t*) malloc(size);
-//	//for (i = 0; i < size; i++)
-//	//	steps[i] = -1;
-//	//steps = (int16_t*) pCMe->m_pIMem->pVTbl->Alloc(pCMe->m_pIMem, size * sizeof(int16_t));
-//	uint32_t steps[40];
-//	for(i = 0; i < 40; i++)
-//		steps[i] = -1;
-//
-//	//printf("Steps size: %d\n", size);
-//	//printf("Steps array:\n");
-// //   for (i = 0; i < size; i++)
-// //       printf("%d: %d ", i, steps[i]);
-// //   printf("\n");
-//
-//	steps_index = CalculateSedgewickSteps(steps, size);
-//
-//	printf("Steps array:\n");
-//    for (i = 0; i <= steps_index; i++)
-//        printf("%d ", steps[i]);
-//    printf("\n");
-//	printf("Steps array:\n");
-//    for (i = 0; i < 40; i++)
-//        printf("%d ", steps[i]);
-//    printf("\n");
-//
-//	for (i = steps_index; i >= 0; i--) {
-//		InsertionSort(arr, size, steps[i]);
-//	}
-//
-// //   for (step = size / 2; step > 0; step /= 2) {
-//	//	InsertionSort(arr, size, step);
-//	//}
-//
-//	pCMe->m_pIMem->pVTbl->Free(pCMe->m_pIMem, steps);
-//    return 0;
-//}
 
 /*
  *
