@@ -28,21 +28,6 @@
 #include "time.h"
 #include "string.h"
 
-//int16_t __cdecl compare_int16(const void* a, const void* b) {
-//	return (*(int16_t*)a > *(int16_t*)b);
-//}
-//
-//int16_t __cdecl compare_int32(const void* a, const void* b) {
-//	return (*(int32_t*)a > *(int32_t*)b);
-//}
-//
-//int16_t __cdecl compare_double(const void* a, const void* b) {
-//	return (*(double_t*)a > *(double_t*)b);
-//}
-//
-//int16_t __cdecl compare_float(const void* a, const void* b) {
-//	return (*(float_t*)a > *(float_t*)b);
-//}
 
 int16_t __cdecl compare_int16(const void* a, const void* b) {
 	int16_t arg1 = *(const int16_t*)a;
@@ -131,6 +116,7 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	double_t* arr_double;
 	float_t* arr_float;
 	char_t** string_arr;
+	int32_t string_size;
 
 	/* Переменные для замера времени работы */
 	clock_t start, end;
@@ -189,6 +175,37 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 
 	printf("Input an array size: \n");
     scanf_s("%d", &size);
+
+	
+	/*СТРОКОВЫЙ ПРИМЕР*/
+
+	/* Генерация массива строк */
+	//string_arr = (char_t **) pIMem->pVTbl->Alloc(pIMem, size * sizeof(char_t*));
+	//for(i = 0; i < size; i++) {
+	//	string_arr[i] = (char_t*) pIMem->pVTbl->Alloc(pIMem, 15 * sizeof(char_t));
+	//	string_size = rand() % 10 + 2;
+	//	for (j = 0; j < string_size; ++j) {
+	//		string_arr[i][j] = (char_t) (rand() % ('z' - 'a' + 1) + 'a');
+	//  }
+	//  string_arr[i][string_size] = 0;
+	//}
+
+	/* Печать неотсортированного массива */
+	//for(j = 0; j < size; j++) {
+	//	printf("%s\n", string_arr[j]);
+	//}
+	//printf("-----------------------------\n");
+
+	/* Сортировка */
+	//result = pIEcoLab1->pVTbl->qsort(pIEcoLab1, size, sizeof(char_t*), string_arr, compare_string);
+
+	/* Печать отсортированного массива */
+	//for(j = 0; j < size; j++) {
+	//	printf("%s\n", string_arr[j]);
+	//}
+
+
+	/* ЧИСЛОВЫЕ ПРИМЕРЫ */
 	
 	/* Выделение памяти для массивов */
 	//arr16 = (int16_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(int16_t));
@@ -196,22 +213,10 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	//arr_double = (double_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(double_t));
 	//arr_float = (float_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(float_t));
 	//arr_double = (double_t *) pIMem->pVTbl->Alloc(pIMem, size * sizeof(double_t));
-	
-	//string_arr = (char_t **) pIMem->pVTbl->Alloc(pIMem, size * sizeof(char_t*));
-	//for(j = 0; j < size; j++) {
-	//	string_arr[j] = (char_t*) pIMem->pVTbl->Alloc(pIMem, 15 * sizeof(char_t));
-	//}
-
-	//for(j = 0; j < size; j++) {
-	//	scanf_s("%s", &string_arr[j]);
-	//}
-
-	//for(j = 0; j < size; j++) {
-	//	printf("%s", string_arr[j]);
-	//}
     
-	/* Ввод элементов массива */
- //   printf("Input the array elements: \n");
+
+	/* Ввод элементов массива вручную */
+	//printf("Input the array elements: \n");
 	//for (i = 0; i < size; i++) {
 	//	//scanf_s("%d", &arr16[i]);
 	//    scanf_s("%d", &arr32[i]);
