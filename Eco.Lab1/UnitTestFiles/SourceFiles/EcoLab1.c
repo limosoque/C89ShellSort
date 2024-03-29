@@ -25,6 +25,13 @@
 #include "IdEcoFileSystemManagement1.h"
 #include "IdEcoLab1.h"
 
+/* Включение */
+#include "IdEcoCalculatorA.h"
+#include "IdEcoCalculatorB.h"
+#include "IdEcoCalculatorD.h"
+#include "IdEcoCalculatorE.h"
+
+/* Тесты */
 #include "time.h"
 #include "string.h"
 
@@ -105,7 +112,10 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
     char_t* copyName = 0;
     /* Указатель на тестируемый интерфейс */
     IEcoLab1* pIEcoLab1 = 0;
-
+	/* Указатель на включаемый интерфейс */
+	IEcoCalculatorX* pIEcoCalculatorX = 0;
+	/* Указатель на включаемый интерфейс */
+    IEcoCalculatorY* pIEcoCalculatorY = 0;
 	
 	/* Переменные для сортировки */
 	int32_t i;
@@ -122,6 +132,9 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	clock_t start, end;
 	double_t sorting_time = 0;
 	int16_t j;
+
+	/* Переменные для проверки включения */
+	int16_t x = 0, y = 0;
 
     /* Проверка и создание системного интрефейса */
     if (pISys == 0) {
@@ -168,6 +181,35 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
         goto Release;
     }
 
+
+	/* Проверка включения */
+	printf("Input x:\n");
+    scanf_s("%d", &x);
+	printf("Input y:\n");
+    scanf_s("%d", &y);
+
+	printf("Get component X from EcoLab1\n");
+	result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**)&pIEcoCalculatorX);
+    printf("Addition result: %d\n", pIEcoCalculatorX->pVTbl->Addition(pIEcoCalculatorX, x, y));
+	printf("Subtraction result: %d\n", pIEcoCalculatorX->pVTbl->Subtraction(pIEcoCalculatorX, x, y));
+
+	printf("Get component Y from EcoLab1\n");
+    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorY, (void**)&pIEcoCalculatorY);
+    printf("Multiplication result: %d\n", pIEcoCalculatorY->pVTbl->Multiplication(pIEcoCalculatorY, x, y));
+    printf("Division result: %d\n", pIEcoCalculatorY->pVTbl->Division(pIEcoCalculatorY, x, y));
+
+	printf("Get component X from Y\n");
+	result = pIEcoCalculatorY->pVTbl->QueryInterface(pIEcoCalculatorY, &IID_IEcoCalculatorX, (void**)&pIEcoCalculatorX);
+	printf("Addition result: %d\n", pIEcoCalculatorX->pVTbl->Addition(pIEcoCalculatorX, x, y));
+	printf("Subtraction result: %d\n", pIEcoCalculatorX->pVTbl->Subtraction(pIEcoCalculatorX, x, y));
+	
+	printf("Get component Y from X\n");
+    result = pIEcoCalculatorX->pVTbl->QueryInterface(pIEcoCalculatorX, &IID_IEcoCalculatorY, (void**)&pIEcoCalculatorY);
+    printf("Multiplication result: %d\n", pIEcoCalculatorY->pVTbl->Multiplication(pIEcoCalculatorY, x, y));
+    printf("Division result: %d\n", pIEcoCalculatorY->pVTbl->Division(pIEcoCalculatorY, x, y));
+
+	printf("Get component EcoLab1 from X\n");
+    result = pIEcoCalculatorX->pVTbl->QueryInterface(pIEcoCalculatorX, &IID_IEcoLab1, (void**)&pIEcoLab1);
 
 	/* Проверка сортировки */
 
