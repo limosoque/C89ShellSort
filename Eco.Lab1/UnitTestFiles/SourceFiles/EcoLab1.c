@@ -35,6 +35,12 @@
 #include "time.h"
 #include "string.h"
 
+/* Колбэки */
+#include "IEcoLab1Events.h"
+#include "IdEcoList1.h"
+#include "CEcoLab1Sink.h"
+#include "IEcoConnectionPointContainer.h"
+
 
 int16_t __cdecl compare_int16(const void* a, const void* b) {
 	int16_t arg1 = *(const int16_t*)a;
@@ -116,6 +122,15 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	IEcoCalculatorX* pIEcoCalculatorX = 0;
 	/* Указатель на включаемый интерфейс */
     IEcoCalculatorY* pIEcoCalculatorY = 0;
+
+	/* Указатель на интерфейс контейнера точек подключения */
+    IEcoConnectionPointContainer* pICPC = 0;
+    /* Указатель на интерфейс точки подключения */
+    IEcoConnectionPoint* pICP = 0;
+    /* Указатель на обратный интерфейс */
+    IEcoLab1Events* pIEcoLab1Sink = 0;
+    IEcoUnknown* pISinkUnk = 0;
+    uint32_t cAdvise = 0;
 	
 	/* Переменные для сортировки */
 	int32_t i;
@@ -181,35 +196,69 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
         goto Release;
     }
 
+	/* Проверка поддержки подключений обратного интерфейса */
+    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoConnectionPointContainer, (void **)&pICPC);
+    if (result != 0 || pICPC == 0) {
+        /* Освобождение интерфейсов в случае ошибки */
+        goto Release;
+    }
+
+    /* Запрос на получения интерфейса точки подключения */
+    result = pICPC->pVTbl->FindConnectionPoint(pICPC, &IID_IEcoLab1Events, &pICP);
+    if (result != 0 || pICP == 0) {
+        /* Освобождение интерфейсов в случае ошибки */
+        goto Release;
+    }
+    /* Освобождение интерфейса */
+    pICPC->pVTbl->Release(pICPC);
+
+    /* Создание экземпляра обратного интерфейса */
+    result = createCEcoLab1Sink(pIMem, (IEcoLab1Events**)&pIEcoLab1Sink);
+
+    if (pIEcoLab1Sink != 0) {
+        result = pIEcoLab1Sink->pVTbl->QueryInterface(pIEcoLab1Sink, &IID_IEcoUnknown,(void **)&pISinkUnk);
+        if (result != 0 || pISinkUnk == 0) {
+            /* Освобождение интерфейсов в случае ошибки */
+            goto Release;
+        }
+        /* Подключение */
+        result = pICP->pVTbl->Advise(pICP, pISinkUnk, &cAdvise);
+        /* Проверка */
+        if (result == 0 && cAdvise == 1) {
+            /* Сюда можно добавить код */
+        }
+        /* Освобождение интерфейса */
+        pISinkUnk->pVTbl->Release(pISinkUnk);
+    }
 
 	/* Проверка включения */
-	printf("Input x:\n");
-    scanf_s("%d", &x);
-	printf("Input y:\n");
-    scanf_s("%d", &y);
+	//printf("Input x:\n");
+ //   scanf_s("%d", &x);
+	//printf("Input y:\n");
+ //   scanf_s("%d", &y);
 
-	printf("Get component X from EcoLab1\n");
-	result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**)&pIEcoCalculatorX);
-    printf("Addition result: %d\n", pIEcoCalculatorX->pVTbl->Addition(pIEcoCalculatorX, x, y));
-	printf("Subtraction result: %d\n", pIEcoCalculatorX->pVTbl->Subtraction(pIEcoCalculatorX, x, y));
+	//printf("Get component X from EcoLab1\n");
+	//result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**)&pIEcoCalculatorX);
+ //   printf("Addition result: %d\n", pIEcoCalculatorX->pVTbl->Addition(pIEcoCalculatorX, x, y));
+	//printf("Subtraction result: %d\n", pIEcoCalculatorX->pVTbl->Subtraction(pIEcoCalculatorX, x, y));
 
-	printf("Get component Y from EcoLab1\n");
-    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorY, (void**)&pIEcoCalculatorY);
-    printf("Multiplication result: %d\n", pIEcoCalculatorY->pVTbl->Multiplication(pIEcoCalculatorY, x, y));
-    printf("Division result: %d\n", pIEcoCalculatorY->pVTbl->Division(pIEcoCalculatorY, x, y));
+	//printf("Get component Y from EcoLab1\n");
+ //   result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorY, (void**)&pIEcoCalculatorY);
+ //   printf("Multiplication result: %d\n", pIEcoCalculatorY->pVTbl->Multiplication(pIEcoCalculatorY, x, y));
+ //   printf("Division result: %d\n", pIEcoCalculatorY->pVTbl->Division(pIEcoCalculatorY, x, y));
 
-	printf("Get component X from Y\n");
-	result = pIEcoCalculatorY->pVTbl->QueryInterface(pIEcoCalculatorY, &IID_IEcoCalculatorX, (void**)&pIEcoCalculatorX);
-	printf("Addition result: %d\n", pIEcoCalculatorX->pVTbl->Addition(pIEcoCalculatorX, x, y));
-	printf("Subtraction result: %d\n", pIEcoCalculatorX->pVTbl->Subtraction(pIEcoCalculatorX, x, y));
-	
-	printf("Get component Y from X\n");
-    result = pIEcoCalculatorX->pVTbl->QueryInterface(pIEcoCalculatorX, &IID_IEcoCalculatorY, (void**)&pIEcoCalculatorY);
-    printf("Multiplication result: %d\n", pIEcoCalculatorY->pVTbl->Multiplication(pIEcoCalculatorY, x, y));
-    printf("Division result: %d\n", pIEcoCalculatorY->pVTbl->Division(pIEcoCalculatorY, x, y));
+	//printf("Get component X from Y\n");
+	//result = pIEcoCalculatorY->pVTbl->QueryInterface(pIEcoCalculatorY, &IID_IEcoCalculatorX, (void**)&pIEcoCalculatorX);
+	//printf("Addition result: %d\n", pIEcoCalculatorX->pVTbl->Addition(pIEcoCalculatorX, x, y));
+	//printf("Subtraction result: %d\n", pIEcoCalculatorX->pVTbl->Subtraction(pIEcoCalculatorX, x, y));
+	//
+	//printf("Get component Y from X\n");
+ //   result = pIEcoCalculatorX->pVTbl->QueryInterface(pIEcoCalculatorX, &IID_IEcoCalculatorY, (void**)&pIEcoCalculatorY);
+ //   printf("Multiplication result: %d\n", pIEcoCalculatorY->pVTbl->Multiplication(pIEcoCalculatorY, x, y));
+ //   printf("Division result: %d\n", pIEcoCalculatorY->pVTbl->Division(pIEcoCalculatorY, x, y));
 
-	printf("Get component EcoLab1 from X\n");
-    result = pIEcoCalculatorX->pVTbl->QueryInterface(pIEcoCalculatorX, &IID_IEcoLab1, (void**)&pIEcoLab1);
+	//printf("Get component EcoLab1 from X\n");
+ //   result = pIEcoCalculatorX->pVTbl->QueryInterface(pIEcoCalculatorX, &IID_IEcoLab1, (void**)&pIEcoLab1);
 
 	/* Проверка сортировки */
 
@@ -318,6 +367,13 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	//pIMem->pVTbl->Free(pIMem, arr_double);
 	//pIMem->pVTbl->Free(pIMem, arr_float);
     pIMem->pVTbl->Free(pIMem, name);
+
+	if (pIEcoLab1Sink != 0) {
+		/* Отключение */
+		result = pICP->pVTbl->Unadvise(pICP, cAdvise);
+		pIEcoLab1Sink->pVTbl->Release(pIEcoLab1Sink);
+		pICP->pVTbl->Release(pICP);
+    }
 
 Release:
 

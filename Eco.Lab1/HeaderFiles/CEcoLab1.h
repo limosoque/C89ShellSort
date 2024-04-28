@@ -26,6 +26,11 @@
 /* Включение */
 #include "IEcoCalculatorX.h"
 #include "IEcoCalculatorY.h"
+/* Колбэки */
+#include "IEcoLab1Events.h"
+#include "IEcoEnumConnections.h"
+#include "IEcoConnectionPointContainer.h"
+#include "CEcoLab1ConnectionPoint.h"
 
 typedef struct CEcoLab1 {
 
@@ -38,6 +43,9 @@ typedef struct CEcoLab1 {
     /* Таблица функций интерфейса IEcoCalculatorY */
     IEcoCalculatorYVTbl* m_pVTblIEcoCalculatorY;
 
+	/* Таблица функций интерфейса IEcoConnectionPointContainer */
+    IEcoConnectionPointContainerVTbl* m_pVTblICPC;
+
     /* Счетчик ссылок */
     uint32_t m_cRef;
 
@@ -46,6 +54,9 @@ typedef struct CEcoLab1 {
 
     /* Системный интерфейс */
     IEcoSystem1* m_pISys;
+
+	/* Точка подключения */
+    CEcoLab1ConnectionPoint* m_pISinkCP;
 
 	/* Указатель на интерфейс IEcoCalculatorX включаемого компонента */
     IEcoCalculatorX* m_pIEcoCalculatorX;
