@@ -42,9 +42,13 @@ typedef struct IEcoLab1VTblEvents {
     /* IEcoLab1Events */
     int16_t (ECOCALLMETHOD *OnMyCallback)(/* in */ struct IEcoLab1Events* me, /* in */ char_t* Name);
     
+	int16_t (ECOCALLMETHOD *OnPrintDividingType)(/* in */ struct IEcoLab1Events* me, /* in */ int16_t type);
 	int16_t (ECOCALLMETHOD *OnNewStepSize)(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t step);
 	int16_t (ECOCALLMETHOD *OnPrintIntArray)(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[]);
-
+	int16_t (ECOCALLMETHOD *OnPrintIntArrayBeforeSorting)(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[]);
+	int16_t (ECOCALLMETHOD *OnPrintIntArrayAfterSorting)(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[]);
+	int16_t (ECOCALLMETHOD *OnPrintColoredIntArray)(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[],
+		/* in */ uint32_t idx_to_color_size, /* in */ int32_t* idx_to_color[], int16_t is_first_print);
 
 } IEcoLab1VTblEvents, *IEcoLab1VTblEventsPtr;
 

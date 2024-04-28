@@ -351,15 +351,15 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 	//sorting_time /= 10;
 	printf("Sorting time: %f milli-seconds\n", sorting_time);
 
-	/* Печать отсортированного массива */
-	printf("Sorted array:\n");
-	for (i = 0; i < size; i++) {
-		//printf("%d ", arr16[i]);
-		printf("%d ", arr32[i]);
-		//printf("%f ", arr_double[i]);
-		//printf("%f ", arr_float[i]);
-	}
-    printf("\n");
+	///* Печать отсортированного массива */
+	//printf("Sorted array:\n");
+	//for (i = 0; i < size; i++) {
+	//	//printf("%d ", arr16[i]);
+	//	printf("%d ", arr32[i]);
+	//	//printf("%f ", arr_double[i]);
+	//	//printf("%f ", arr_float[i]);
+	//}
+ //   printf("\n");
 
     /* Освлбождение блока памяти */
 	//pIMem->pVTbl->Free(pIMem, arr16);

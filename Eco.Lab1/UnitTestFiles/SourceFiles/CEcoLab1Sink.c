@@ -20,6 +20,8 @@
 #include "CEcoLab1Sink.h"
 #include "IEcoConnectionPointContainer.h"
 
+#define BACKGROUND_ORANGE 0x0060
+
 /*
  *
  * <сводка>
@@ -122,6 +124,37 @@ int16_t ECOCALLMETHOD CEcoLab1Sink_OnMyCallback(/* in */ struct IEcoLab1Events* 
     return 0;
 }
 
+int16_t ECOCALLMETHOD CEcoLab1Sink_OnPrintDividingType(/* in */ struct IEcoLab1Events* me, /* in */ int16_t type){
+	CEcoLab1Sink* pCMe = (CEcoLab1Sink*)me;
+	// Настройка вывода в консоль
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    WORD saved_attributes;
+
+    if (me == 0 ) {
+        return -1;
+    }
+
+	// Сохранение текущих атрибутов
+    GetConsoleScreenBufferInfo(handle, &consoleInfo);
+    saved_attributes = consoleInfo.wAttributes;
+
+    SetConsoleTextAttribute(handle, BACKGROUND_ORANGE);
+
+	if(type == 0){
+		printf("Shell's ");
+	}
+	else if(type == 1){
+		printf("Sedgwick's ");
+	}
+	printf("dividing\n");
+
+	// Восстановление атрибутов
+	SetConsoleTextAttribute(handle, saved_attributes);
+
+    return 0;
+}
+
 /*
  *
  * <сводка>
@@ -158,15 +191,169 @@ int16_t ECOCALLMETHOD CEcoLab1Sink_OnNewStepSize(/* in */ struct IEcoLab1Events*
  */
 int16_t ECOCALLMETHOD CEcoLab1Sink_OnPrintIntArray(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[]){
 	CEcoLab1Sink* pCMe = (CEcoLab1Sink*)me;
+	size_t i = 0;
+	// Настройка вывода в консоль
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    WORD saved_attributes;
 
-    if (me == 0 ) {
+	if (me == 0 ) {
         return -1;
     }
 
-	for(size_t i = 0; i != arr_size; ++i){
+	// Сохранение текущих атрибутов
+    GetConsoleScreenBufferInfo(handle, &consoleInfo);
+    saved_attributes = consoleInfo.wAttributes;
+
+    //SetConsoleTextAttribute(handle, BACKGROUND_BLUE/* | BACKGROUND_RED | BACKGROUND_GREEN*/ | BACKGROUND_INTENSITY);
+	for(i = 0; i != arr_size; ++i){
 		printf("%d ", arr[i]);
 	}
+	printf("\n");
 
+	// Восстановление атрибутов
+	SetConsoleTextAttribute(handle, saved_attributes);
+
+    return 0;
+}
+
+/*
+ *
+ * <сводка>
+ *   Функция OnPrintIntArrayBeforeSorting
+ * </сводка>
+ *
+ * <описание>
+ *   Функция обратного вызова
+ * </описание>
+ *
+ */
+int16_t ECOCALLMETHOD CEcoLab1Sink_OnPrintIntArrayBeforeSorting(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[]){
+	CEcoLab1Sink* pCMe = (CEcoLab1Sink*)me;
+	size_t i = 0;
+	// Настройка вывода в консоль
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    WORD saved_attributes;
+
+	if (me == 0 ) {
+        return -1;
+    }
+
+	// Сохранение текущих атрибутов
+    GetConsoleScreenBufferInfo(handle, &consoleInfo);
+    saved_attributes = consoleInfo.wAttributes;
+
+    SetConsoleTextAttribute(handle, BACKGROUND_RED | BACKGROUND_INTENSITY);
+	printf("Unsorted array:\n");
+
+	// Восстановление атрибутов
+	SetConsoleTextAttribute(handle, saved_attributes);
+
+	for(i = 0; i != arr_size; ++i){
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
+
+	// Восстановление атрибутов
+	SetConsoleTextAttribute(handle, saved_attributes);
+
+    return 0;
+}
+
+/*
+ *
+ * <сводка>
+ *   Функция OnPrintIntArrayAfterSorting
+ * </сводка>
+ *
+ * <описание>
+ *   Функция обратного вызова
+ * </описание>
+ *
+ */
+int16_t ECOCALLMETHOD CEcoLab1Sink_OnPrintIntArrayAfterSorting(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[]){
+	CEcoLab1Sink* pCMe = (CEcoLab1Sink*)me;
+	size_t i = 0;
+	// Настройка вывода в консоль
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    WORD saved_attributes;
+
+	if (me == 0 ) {
+        return -1;
+    }
+
+	// Сохранение текущих атрибутов
+    GetConsoleScreenBufferInfo(handle, &consoleInfo);
+    saved_attributes = consoleInfo.wAttributes;
+
+    SetConsoleTextAttribute(handle, BACKGROUND_GREEN | BACKGROUND_INTENSITY);
+	printf("Sorted array:\n");
+
+	// Восстановление атрибутов
+	SetConsoleTextAttribute(handle, saved_attributes);
+
+	for(i = 0; i != arr_size; ++i){
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
+
+	// Восстановление атрибутов
+	SetConsoleTextAttribute(handle, saved_attributes);
+
+    return 0;
+}
+
+/*
+ *
+ * <сводка>
+ *   Функция OnPrintColoredIntArray
+ * </сводка>
+ *
+ * <описание>
+ *   Функция обратного вызова
+ * </описание>
+ *
+ */
+int16_t ECOCALLMETHOD CEcoLab1Sink_OnPrintColoredIntArray(/* in */ struct IEcoLab1Events* me, /* in */ uint32_t arr_size, /* in */ void* arr[],
+	/* in */ uint32_t idx_to_color_size, /* in */ int32_t* idx_to_color[], int16_t is_first_print){
+	CEcoLab1Sink* pCMe = (CEcoLab1Sink*)me;
+	size_t i = 0, j = 0;
+	// Настройка вывода в консоль
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    WORD saved_attributes;
+
+	if (me == 0 ) {
+        return -1;
+    }
+
+	// Сохранение текущих атрибутов
+    GetConsoleScreenBufferInfo(handle, &consoleInfo);
+    saved_attributes = consoleInfo.wAttributes;
+
+	if(is_first_print != 1){
+		printf("\r");
+	}
+
+	for(i = 0; i != arr_size; ++i){
+		if(j < idx_to_color_size && i == (size_t)idx_to_color[j]){
+			SetConsoleTextAttribute(handle, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
+			printf("%d", arr[i]);
+			SetConsoleTextAttribute(handle, saved_attributes);
+			printf(" ");
+			++j;
+		}
+		else{
+			printf("%d ", arr[i]);
+		}
+	}
+	//printf("\n");
+
+	// Восстановление атрибутов
+	SetConsoleTextAttribute(handle, saved_attributes);
+	Sleep(1500);
     return 0;
 }
 
@@ -240,7 +427,13 @@ IEcoLab1VTblEvents g_x2D2E3B9214F248A6A09ECB494B59C795VTblEvents = {
     CEcoLab1Sink_QueryInterface,
     CEcoLab1Sink_AddRef,
     CEcoLab1Sink_Release,
-    CEcoLab1Sink_OnMyCallback
+    CEcoLab1Sink_OnMyCallback,
+	CEcoLab1Sink_OnPrintDividingType,
+	CEcoLab1Sink_OnNewStepSize,
+    CEcoLab1Sink_OnPrintIntArray,
+	CEcoLab1Sink_OnPrintIntArrayBeforeSorting,
+	CEcoLab1Sink_OnPrintIntArrayAfterSorting,
+	CEcoLab1Sink_OnPrintColoredIntArray
 };
 
 /*
