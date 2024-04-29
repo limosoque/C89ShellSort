@@ -349,7 +349,7 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
 		sorting_time += (double_t)(end - start) * 1000.0 / CLOCKS_PER_SEC;
 	//}
 	//sorting_time /= 10;
-	printf("Sorting time: %f milli-seconds\n", sorting_time);
+	//printf("Sorting time: %f milli-seconds\n", sorting_time);
 
 	///* Печать отсортированного массива */
 	//printf("Sorted array:\n");

@@ -471,44 +471,19 @@ void InsertionSort(
 	uint32_t idx_to_color_size = 0;
 	int16_t is_first_print = 1;
 
-    for (i = step; i < arr_size; i++) {
-		memcpy(temp, (char_t*)arr + (i * type_size), type_size);
-
-        for (j = i; j >= step && (int16_t)compare((char_t*)arr + (j - step) * type_size, temp) == 1; j -= step) {
+	/* Реализация swap-ом */
+	for (i = step; i < arr_size; i++) {
+		for (j = i; j >= step && (int16_t)compare((char_t*)arr + (j - step) * type_size, (char_t*)arr + j * type_size) == 1; j -= step) {
 			idx_to_color[idx_to_color_size++] = j - step;
 			idx_to_color[idx_to_color_size++] = j;
 			CEcoLab1_Fire_OnPrintColoredIntArray((IEcoLab1*) pCMe, arr_size, arr, idx_to_color_size, idx_to_color, is_first_print--);
-		    idx_to_color_size = 0;
-
+			idx_to_color_size = 0;
+			
+			memcpy(temp, (char_t*)arr + (j * type_size), type_size);
 			memcpy((char_t*)arr + j * type_size, (char_t*)arr + (j - step) * type_size, type_size);
-        } 
-		memcpy((char_t*)arr + j * type_size, temp, type_size);
-		//idx_to_color[idx_to_color_size++] = j;
-		//idx_to_color[idx_to_color_size++] = i;
-		//CEcoLab1_Fire_OnPrintColoredIntArray((IEcoLab1*) pCMe, arr_size, arr, idx_to_color_size, idx_to_color);
-		//idx_to_color_size = 0;
+			memcpy((char_t*)arr + (j - step) * type_size, temp, type_size);
+		} 
     }
-
-	/* TODO: заменить на swap для наглядности визуализации */
-	//for (i = step; i < arr_size; i++) {
-	//	//memcpy(temp, (char_t*)arr + (i * type_size), type_size);
-
-	//	for (j = i; j >= step && (int16_t)compare((char_t*)arr + (j - step) * type_size, (char_t*)arr + i * type_size) == 1; j -= step) {
-	//		idx_to_color[idx_to_color_size++] = j - step;
-	//		idx_to_color[idx_to_color_size++] = j;
-	//		CEcoLab1_Fire_OnPrintColoredIntArray((IEcoLab1*) pCMe, arr_size, arr, idx_to_color_size, idx_to_color);
-	//		idx_to_color_size = 0;
-	//		
-	//		memcpy(temp, (char_t*)arr + (i * type_size), type_size);
-	//		memcpy((char_t*)arr + j * type_size, (char_t*)arr + (j - step) * type_size, type_size);
-	//		memcpy((char_t*)arr + j * type_size, temp, type_size);
-	//	} 
-	//	memcpy((char_t*)arr + j * type_size, temp, type_size);
-	//	//idx_to_color[idx_to_color_size++] = j;
-	//	//idx_to_color[idx_to_color_size++] = i;
-	//	//CEcoLab1_Fire_OnPrintColoredIntArray((IEcoLab1*) pCMe, arr_size, arr, idx_to_color_size, idx_to_color);
-	//	//idx_to_color_size = 0;
- //   }
 
 	printf("\n");
 	pCMe->m_pIMem->pVTbl->Free(pCMe->m_pIMem, temp);
